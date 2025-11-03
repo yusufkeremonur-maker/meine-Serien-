@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine Animes, Filme und Serien</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            margin: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        input, select, button {
+            padding: 8px;
+            margin: 5px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        li {
+            background-color: #d6eaf8;
+            margin: 5px 0;
+            padding: 10px;
+            border-left: 5px solid #3498db;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Meine Animes, Filme und Serien</h1>
+
+    <p>Füge hier deine Lieblings-Animes, Filme oder Serien hinzu:</p>
+
+    <label for="title">Titel:</label><br>
+    <input type="text" id="title" placeholder="Titel eingeben"><br>
+
+    <label for="type">Typ:</label><br>
+    <select id="type">
+        <option value="Anime">Anime</option>
+        <option value="Film">Film</option>
+        <option value="Serie">Serie</option>
+    </select><br>
+
+    <button onclick="addItem()">Hinzufügen</button>
+
+    <h2>Meine Liste:</h2>
+    <ul id="myList"></ul>
+
+    <script>
+        // Lade gespeicherte Daten beim Start
+        let items = JSON.parse(localStorage.getItem('myList')) || [];
+
+        function saveItems() {
+            localStorage.setItem('myList', JSON.stringify(items));
+        }
+
+        function renderList() {
+            const list = document.getElementById('myList');
+            list.innerHTML = '';
+            items.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${item.title} (${item.type})`;
+
+                // Löschen-Button
+                const btn = document.createElement('button');
+                btn.textContent = 'Löschen';
+                btn.className = 'delete-btn';
+                btn.onclick = () => {
+                    items.splice(index, 1);
+                    saveItems();
+                    renderList();
+                }
+
+                li.appendChild(btn);
+                list.appendChild(li);
+            });
+        }
+
+        function addItem() {
+            const title = document.getElementById('title').value.trim();
+            const type = document.getElementById('type').value;
+
+            if (title === '') {
+                alert('Bitte gib einen Titel ein!');
+                return;
+            }
+
+            items.push({ title, type });
+            saveItems();
+            renderList();
+
+            document.getElementById('title').value = '';
+            document.getElementById('type').value = 'Anime';
+        }
+
+        // Liste beim Laden anzeigen
+        renderList();
+    </script>
+</body>
+</html>
