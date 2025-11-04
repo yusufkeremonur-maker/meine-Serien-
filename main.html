@@ -1,153 +1,273 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Meine Filme, Serien & Animes</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Meine Filme, Serien, Animes, Games & Mangas</title>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    margin: 0;
-    padding: 20px;
-
-    /* Naruto Hintergrundbild */
-    background-image: url('https://images3.alphacoders.com/769/769859.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    position: relative;
-  }
-
-  body::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 0;
-  }
-
-  .container {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    width: 95%;
-    max-width: 1200px;
-    background-color: rgba(0,0,0,0.6);
-    padding: 20px;
-    border-radius: 10px;
-  }
-
-  h1 { color: #ffeb3b; }
-
-  .list-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    flex-wrap: wrap;
-    gap: 15px;
-  }
-
-  .list-box {
-    flex: 1 1 32%;
-    min-width: 250px;
-    margin: 0;
-    padding: 15px;
-    border-radius: 6px;
-    color: white;
-  }
-
-  .list-box h2 { margin-top: 0; }
-
-  ul { list-style-type: none; padding-left: 0; }
-
-  li {
-    margin: 5px 0;
-    padding: 8px;
-    border-radius: 4px;
-    background-color: rgba(255,255,255,0.2);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .item-info { display: flex; align-items: center; }
-  .item-icon { margin-right: 8px; font-size: 1.2em; }
-
-  .delete-btn {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 3px 6px;
-    cursor: pointer;
-    border-radius: 3px;
-    transition: background-color 0.2s;
-  }
-
-  .delete-btn:hover { background-color: #c0392b; }
+*{box-sizing:border-box}
+body{
+  font-family:'Segoe UI',Arial,sans-serif;color:#fff;
+  display:flex;justify-content:center;align-items:flex-start;
+  min-height:100vh;margin:0;padding:20px;
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+  background-image:url('https://images8.alphacoders.com/104/1042570.jpg');
+  transition:background-image .8s ease-in-out,background-color .5s,color .5s;
+}
+body::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.5);z-index:0}
+.container{
+  position:relative;z-index:1;width:95%;max-width:1200px;
+  background:rgba(0,0,0,.65);backdrop-filter:blur(6px);
+  padding:20px;border-radius:15px;text-align:center;box-shadow:0 0 15px rgba(0,0,0,.5);
+}
+h1{color:#ffd95e;text-shadow:0 0 8px rgba(255,217,94,.8);margin-bottom:20px}
+input,select,button{display:block;margin:10px auto;padding:10px;width:80%;max-width:300px;border:none;border-radius:6px;font-size:1em}
+button{background:linear-gradient(135deg,#2980b9,#3498db);color:#fff;cursor:pointer;font-weight:bold;transition:all .25s ease;}
+button:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 0 10px rgba(52,152,219,.5);}
+.list-container{display:flex;flex-wrap:wrap;justify-content:space-between;gap:15px;margin-top:25px}
+.list-box{flex:1 1 30%;min-width:250px;background-color:rgba(255,255,255,0.07);padding:15px;border-radius:10px;transition:.3s}
+.list-box.hide{display:none;}
+li{margin:5px 0;padding:10px;border-radius:5px;background:rgba(255,255,255,0.2);
+  display:flex;justify-content:space-between;align-items:center;transition:.3s}
+li:hover{transform:scale(1.03);background:rgba(255,255,255,0.3)}
+.delete-btn{background:linear-gradient(135deg,#e74c3c,#c0392b);border:none;color:#fff;
+  padding:6px 10px;border-radius:5px;cursor:pointer;font-weight:bold}
+#themeSwitch{
+  position:fixed;top:10px;right:10px;z-index:20;width:60px;height:30px;background:#444;
+  border-radius:15px;cursor:pointer;transition:background .3s;
+}
+#themeSwitch::before{
+  content:'☀️';position:absolute;top:2px;left:2px;width:26px;height:26px;border-radius:50%;
+  background:#fff;color:#000;display:flex;align-items:center;justify-content:center;font-size:16px;
+  transition:left .3s,transform .3s,background .3s;
+}
+body.light{color:#000;}
+body.light::before{background:rgba(255,255,255,.35);}
+body.light .container{background:rgba(255,255,255,.85);}
+body.light .list-box{background:rgba(0,0,0,.05);}
+body.light #themeSwitch{background:#ddd;}
+body.light #themeSwitch::before{content:'🌙';left:32px;background:#222;color:#fff;transform:rotate(360deg);}
+#codePopup{
+  position:fixed;inset:0;background-color:rgba(0,0,0,0.7);
+  display:flex;justify-content:center;align-items:center;z-index:10;
+}
+#codePopup .box{background:rgba(30,30,30,0.9);border-radius:15px;padding:30px;text-align:center;color:#fff;box-shadow:0 0 15px rgba(0,0,0,0.6)}
+.num-pad{display:grid;grid-template-columns:repeat(3,60px);gap:10px;justify-content:center;margin-top:12px}
+.num-pad button{background:#444;border:none;color:#fff;font-size:1.2em;border-radius:8px;cursor:pointer;padding:10px;transition:.3s}
+.num-pad button:hover{background:#666;transform:scale(1.05)}
+#errorMsg{color:#ff6666;display:none;margin-top:8px;font-weight:bold}
+@media(max-width:700px){.list-box{flex:1 1 100%}}
+/* Rakete */
+#rocket{
+  position:fixed;bottom:40px;left:-150px;z-index:50;opacity:0;font-size:40px;transform:rotate(45deg);
+  display:flex;align-items:center;gap:10px;
+}
+#rocket span{
+  background:#27ae60;color:#fff;padding:6px 12px;border-radius:6px;font-weight:bold;font-size:16px;box-shadow:0 0 5px rgba(0,0,0,0.4);
+}
+#rocket.launch{animation:flyAcross 2.8s ease-in-out forwards;}
+@keyframes flyAcross{
+  0%{opacity:1;transform:translate(0,0) rotate(45deg);}
+  40%{transform:translate(50vw,-30vh) rotate(30deg);}
+  80%{transform:translate(90vw,-70vh) rotate(10deg);}
+  100%{transform:translate(110vw,-100vh) rotate(0deg);opacity:0;}
+}
+/* Batman: fließend von oben nach unten & tiefer */
+#batmanBox{
+  position:fixed;top:-200px;left:50%;transform:translateX(-50%);
+  display:flex;align-items:center;gap:10px;z-index:60;opacity:0;
+}
+#batmanBox img{width:120px;height:auto;filter:drop-shadow(0 0 8px rgba(0,0,0,0.6));}
+#batmanBox .speech{
+  background:#222;color:#fff;padding:10px 15px;border-radius:10px;
+  font-size:18px;font-weight:bold;font-family:'Comic Sans MS',sans-serif;
+  box-shadow:0 0 10px rgba(0,0,0,0.4);
+}
+@keyframes batSmoothDrop{
+  0%   {opacity:0; transform:translate(-50%, -300px);}
+  10%  {opacity:1; transform:translate(-50%, -120px);}
+  40%  {opacity:1; transform:translate(-50%, 250px);}  /* tiefer im Sichtfeld */
+  70%  {opacity:1; transform:translate(-50%, 600px);}  /* sehr tief */
+  100% {opacity:0; transform:translate(-50%, 900px);} /* ganz raus */
+}
 </style>
 </head>
 <body>
+<div id="themeSwitch"></div>
+<div id="rocket">🚀<span>Hinzugefügt!</span></div>
 
-<div class="container">
-  <h1>Meine Filme, Serien & Animes</h1>
+<!-- Batman -->
+<div id="batmanBox">
+  <img src="https://upload.wikimedia.org/wikipedia/en/8/87/Batman_DC_Comics.png" alt="Batman">
+  <div class="speech">Hallo Yusuf Chef!</div>
+</div>
 
-  <div class="list-container">
-    <div class="list-box" id="animeBox" style="background-color:#8e44ad">
-      <h2>Anime</h2>
-      <ul id="animeList"></ul>
+<!-- Codeeingabe -->
+<div id="codePopup">
+  <div class="box">
+    <h2>Gib den Sicherheitscode ein</h2>
+    <input type="password" id="popupCode" placeholder="Code eingeben">
+    <div class="num-pad">
+      <button>1</button><button>2</button><button>3</button>
+      <button>4</button><button>5</button><button>6</button>
+      <button>7</button><button>8</button><button>9</button>
+      <button id="clear">⌫</button><button>0</button><button id="enter">OK</button>
     </div>
-    <div class="list-box" id="filmBox" style="background-color:#2980b9">
-      <h2>Filme</h2>
-      <ul id="filmList"></ul>
-    </div>
-    <div class="list-box" id="serieBox" style="background-color:#27ae60">
-      <h2>Serien</h2>
-      <ul id="serieList"></ul>
-    </div>
+    <p id="errorMsg">Falscher Code!</p>
   </div>
 </div>
 
-<!-- JS-Datei mit allen Einträgen -->
-<script src="items.js"></script>
+<!-- Hauptinhalt -->
+<div class="container" id="mainContent" hidden>
+  <h1>Meine Filme, Serien, Animes, Games & Mangas</h1>
+  <label for="title">Titel:</label>
+  <input type="text" id="title" placeholder="Titel eingeben">
+  <label for="category">Kategorie:</label>
+  <select id="category">
+    <option value="alle_anzeigen">Alle anzeigen</option>
+    <option value="Anime">Anime</option>
+    <option value="Film">Film</option>
+    <option value="Serie">Serie</option>
+    <option value="Game">Game</option>
+    <option value="Manga">Manga</option>
+  </select>
+  <label for="rating">Bewertung (1–10):</label>
+  <input type="number" id="rating" min="1" max="10" placeholder="z. B. 7">
+  <label for="sortOrder">Sortierung:</label>
+  <select id="sortOrder">
+    <option value="desc">Von besser → schlechter (10→1)</option>
+    <option value="asc">Von schlechter → besser (1→10)</option>
+  </select>
+  <button id="addBtn">Hinzufügen</button>
+  <div class="list-container">
+    <div class="list-box"><h2>Anime</h2><ul id="animeList"></ul></div>
+    <div class="list-box"><h2>Filme</h2><ul id="filmList"></ul></div>
+    <div class="list-box"><h2>Serien</h2><ul id="serieList"></ul></div>
+    <div class="list-box"><h2>Games</h2><ul id="gameList"></ul></div>
+    <div class="list-box"><h2>Mangas</h2><ul id="mangaList"></ul></div>
+  </div>
+</div>
+
 <script>
-  function renderList() {
-    document.getElementById('animeList').innerHTML = '';
-    document.getElementById('filmList').innerHTML = '';
-    document.getElementById('serieList').innerHTML = '';
+(() => {
+  const SECRET_CODE='5252';
+  const popup=document.getElementById('codePopup');
+  const codeInput=document.getElementById('popupCode');
+  const errorMsg=document.getElementById('errorMsg');
+  const mainContent=document.getElementById('mainContent');
+  const clearBtn=document.getElementById('clear');
+  const enterBtn=document.getElementById('enter');
+  const numButtons=document.querySelectorAll('.num-pad button:not(#clear):not(#enter)');
+  const themeSwitch=document.getElementById('themeSwitch');
+  const categorySel=document.getElementById('category');
+  const sortOrderSel=document.getElementById('sortOrder');
+  const rocket=document.getElementById('rocket');
+  const batmanBox=document.getElementById('batmanBox');
+  const backgrounds={
+    alle_anzeigen:'https://cdn.dribbble.com/users/5031/screenshots/3713646/attachments/832536/wallpaper_mikael_gustafsson.png',
+    Anime:'https://images3.alphacoders.com/769/769859.jpg',
+    Serie:'https://images5.alphacoders.com/108/1087628.jpg',
+    Film:'https://wallpapercat.com/w/full/0/2/7/182798-1920x1080-desktop-full-hd-braveheart-background-image.jpg',
+    Game:'https://www.skyweaver.net/images/media/wallpapers/wallpaper1.jpg',
+    Manga:'https://i.redd.it/z6btu437zgi91.jpg'
+  };
+  const setBackground=c=>{
+    document.body.style.backgroundImage = `url('${backgrounds[c]||backgrounds["alle_anzeigen"]}')`;
+  };
 
-    items.forEach((item, index) => {
-      const li = document.createElement('li');
-      let icon = item.category === 'Anime' ? '🎌' :
-                 item.category === 'Film'  ? '🎬' :
-                                             '📺';
+  // Theme
+  const savedTheme=localStorage.getItem('theme')||'dark';
+  setTheme(savedTheme);
+  themeSwitch.addEventListener('click',()=>{
+    const m=document.body.classList.contains('light')?'dark':'light';
+    setTheme(m);localStorage.setItem('theme',m);
+  });
+  function setTheme(m){m==='light'?document.body.classList.add('light'):document.body.classList.remove('light');}
 
-      const info = document.createElement('div');
-      info.className = 'item-info';
-      info.innerHTML = `<span class="item-icon">${icon}</span> ${item.title} – Bewertung: ${item.rating}/10`;
+  // Login
+  numButtons.forEach(btn=>btn.addEventListener('click',()=>{if(codeInput.value.length<6)codeInput.value+=btn.textContent}));
+  clearBtn.addEventListener('click',()=>codeInput.value=codeInput.value.slice(0,-1));
+  enterBtn.addEventListener('click',checkCode);
+  codeInput.addEventListener('keydown',e=>{if(e.key==='Enter')checkCode();});
 
-      const deleteBtn = document.createElement('button');
-      deleteBtn.textContent = 'Löschen';
-      deleteBtn.className = 'delete-btn';
-      deleteBtn.onclick = () => {
-        items.splice(index, 1);
-        renderList();
+  function checkCode(){
+    if(codeInput.value===SECRET_CODE){
+      popup.style.display='none';
+      mainContent.hidden=false;
+      renderList();
+      setBackground('alle_anzeigen');
+      showOnly('alle_anzeigen');
+      // Batman erst danach
+      setTimeout(showBatman,500);
+    }else{errorMsg.style.display='block';codeInput.value='';}
+  }
+
+  function showBatman(){
+    batmanBox.style.animation='batSmoothDrop 6s ease-in-out forwards';
+  }
+
+  // Listenlogik
+  const elements={
+    addBtn:document.getElementById('addBtn'),
+    title:document.getElementById('title'),
+    category:document.getElementById('category'),
+    rating:document.getElementById('rating')
+  };
+  let items=JSON.parse(localStorage.getItem('myList'))||[];
+  const saveItems=()=>localStorage.setItem('myList',JSON.stringify(items));
+
+  function renderList(){
+    ['anime','film','serie','game','manga'].forEach(c=>document.getElementById(c+'List').innerHTML='');
+    const order=sortOrderSel.value;
+    items.sort((a,b)=> order==='desc'?b.rating-a.rating:a.rating-b.rating );
+    items.forEach(item=>{
+      const li=document.createElement('li');
+      li.innerHTML=`${item.title} – ${item.rating}/10 <button class='delete-btn'>Löschen</button>`;
+      li.querySelector('button').onclick=()=>{
+        items=items.filter(i=>i!==item);saveItems();renderList();
       };
-
-      li.appendChild(info);
-      li.appendChild(deleteBtn);
-
-      document.getElementById(item.category.toLowerCase() + 'List').appendChild(li);
+      document.getElementById(item.category.toLowerCase()+'List').appendChild(li);
     });
   }
 
-  renderList();
-</script>
+  sortOrderSel.addEventListener('change',renderList);
 
+  function launchRocket(){
+    rocket.classList.add('launch');
+    rocket.addEventListener('animationend',()=>rocket.classList.remove('launch'),{once:true});
+  }
+
+  function addItem(){
+    const title=elements.title.value.trim();
+    const sel=elements.category.value;
+    const cat=sel==='alle_anzeigen'?'Anime':sel;
+    const rating=parseInt(elements.rating.value,10);
+    if(!title||!rating||rating<1||rating>10){alert('Titel & Bewertung prüfen');return;}
+    items.push({title,category:cat,rating});
+    saveItems();renderList();launchRocket();
+    elements.title.value='';elements.rating.value='';
+  }
+
+  elements.addBtn.addEventListener('click',addItem);
+
+  categorySel.addEventListener('change',()=>{
+    const sel=categorySel.value;
+    setBackground(sel);showOnly(sel);
+  });
+
+  function showOnly(sel){
+    const boxes=document.querySelectorAll('.list-box');
+    boxes.forEach(box=>{
+      if(sel==='alle_anzeigen'){box.classList.remove('hide');}
+      else{
+        const heading=box.querySelector('h2').textContent.toLowerCase();
+        heading.includes(sel.toLowerCase())?box.classList.remove('hide'):box.classList.add('hide');
+      }
+    });
+  }
+
+  setBackground('alle_anzeigen');
+})();
+</script>
 </body>
 </html>
